@@ -96,8 +96,8 @@ const bagsURLs = [
  * - urls: مصفوفة تحتوي على روابط الصفحات الرئيسية للفئة.
  */
 const CATEGORIES_CONFIG = [
-  { name: "seaClothes", urls: seaClothesurls },
-  // { name: "bags", urls: bagsURLs },
+  { name: "bags", urls: bagsURLs },
+  // { name: "seaClothes", urls: seaClothesurls },
   // { name: "shoes", urls: shoesURLs },
   // { name: "wallets", urls: walletsURLs },
   // { name: "clothes", urls: clothesURLs },
