@@ -498,7 +498,10 @@ async function main() {
  */
 async function testSingleProduct(productUrl) {
   log("🚀 Starting single product test...");
-  const browser = await puppeteer.launch({ headless: false }); // إظهار المتصفح دائماً في وضع الاختبار
+  const browser = await puppeteer.launch({
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
   const outputDir = await setupOutputDirectory();
   const testCategoryDir = path.join(outputDir, "test_product_images");
