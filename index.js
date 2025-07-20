@@ -186,59 +186,77 @@ const setupOutputDirectory = async () => {
  * @returns {Promise<string[]>} - مصفوفة تحتوي على روابط كل المنتجات في الفئة.
  */
 const getAllProductLinks = async (page, categoryUrl) => {
-  log(`Navigating to category page: ${categoryUrl}`);
-  await page.goto(categoryUrl, { waitUntil: "networkidle2" });
+  const allProductLinks = new Set();
+  // قائمة الانتظار للصفحات التي سنزورها
+  const pagesToScrape = new Set([categoryUrl]);
+  // سجل بالصفحات التي تمت زيارتها بالفعل لمنع الدخول في حلقة لا نهائية
+  const scrapedPages = new Set();
 
-  let allLinks = new Set();
-  let pagesToVisit = [categoryUrl];
-  let visitedPages = new Set();
+  while (pagesToScrape.size > 0) {
+    const currentPageUrl = pagesToScrape.values().next().value;
+    pagesToScrape.delete(currentPageUrl);
 
-  // التحقق من وجود Pagination وجمع روابط الصفحات الأخرى
-  const paginationExists = await page.$("nav .pagination__main");
-  if (paginationExists) {
-    log("Pagination found. Collecting all page links...");
-    const pageUrls = await page.evaluate(() => {
-      const links = [];
-      const buttons = document.querySelectorAll(
-        ".none_select.pagination__buttons > a.pagination__number"
-      );
-      buttons.forEach((button) => {
-        if (
-          button.href &&
-          !button.classList.contains("pagination__active") &&
-          button.classList.contains("pagination__number")
-        ) {
-          links.push(button.href);
-        }
-      });
-      return links;
-    });
-    pagesToVisit.push(...pageUrls);
-  }
-
-  // المرور على كل صفحة من صفحات الفئة لجمع روابط المنتجات
-  for (const url of pagesToVisit) {
-    if (visitedPages.has(url)) continue;
-    visitedPages.add(url);
-
-    if (url !== categoryUrl) {
-      log(`Navigating to pagination page: ${url}`);
-      await page.goto(url, { waitUntil: "networkidle2" });
+    // نتخطى الرابط إذا كان فارغًا أو تمت زيارته من قبل
+    if (!currentPageUrl || scrapedPages.has(currentPageUrl)) {
+      continue;
     }
 
-    const productLinksOnPage = await page.evaluate(() => {
-      const links = [];
-      document
-        .querySelectorAll(".album__main")
-        .forEach((a) => links.push(a.href));
-      return links;
+    log(`🕵️‍♂️ Visiting page to find links: ${currentPageUrl}`);
+    await page.goto(currentPageUrl, { waitUntil: "networkidle2" });
+    scrapedPages.add(currentPageUrl); // نسجل الصفحة كـ "تمت زيارتها"
+
+    const pageData = await page.evaluate(() => {
+      const productLinks = Array.from(
+        document.querySelectorAll(".album__main > a"),
+        (a) => a.href
+      );
+
+      // ===== START: استخدام الـ Selector والمنطق الصحيح الخاص بك =====
+      const paginationLinks = [];
+      const paginationContainer = document.querySelector(
+        ".none_select.pagination__buttons"
+      );
+      if (paginationContainer) {
+        const childs = Array.from(paginationContainer.children);
+        childs.forEach((child) => {
+          // نتجاهل الصفحة النشطة حاليًا أو أي عناصر أخرى غير مرقمة
+          if (
+            child.classList.contains("pagination__active") ||
+            !child.classList.contains("pagination__number")
+          ) {
+            return;
+          }
+          if (child.href) {
+            paginationLinks.push(child.href);
+          }
+        });
+      }
+      // ===== END: استخدام الـ Selector والمنطق الصحيح الخاص بك =====
+
+      return { productLinks, paginationLinks };
     });
 
-    productLinksOnPage.forEach((link) => allLinks.add(link));
-    log(`Found ${productLinksOnPage.length} products on this page.`);
+    pageData.productLinks.forEach((link) => allProductLinks.add(link));
+    log(
+      `    Found ${pageData.productLinks.length} product links on this page.`
+    );
+
+    if (pageData.paginationLinks.length > 0) {
+      log(`    Found ${pageData.paginationLinks.length} pagination links.`);
+      pageData.paginationLinks.forEach((link) => {
+        // نتأكد من أننا لا نضيف رابط تمت زيارته بالفعل إلى قائمة الانتظار
+        if (!scrapedPages.has(link)) {
+          pagesToScrape.add(link);
+        }
+      });
+    }
   }
 
-  return Array.from(allLinks);
+  // فلتر نهائي للتأكد من أن كل الروابط صالحة
+  const finalLinks = Array.from(allProductLinks).filter(
+    (link) => link && link.startsWith("http")
+  );
+  return finalLinks;
 };
 
 /**
@@ -428,6 +446,17 @@ async function main() {
   const outputDir = await setupOutputDirectory();
   const browser = await puppeteer.launch(BROWSER_OPTIONS);
   const page = await browser.newPage();
+
+  await page.setRequestInterception(true);
+  page.on("request", (req) => {
+    const resourceType = req.resourceType();
+    if (["stylesheet", "font", "image", "media"].includes(resourceType)) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
+
   const categoryArchives = [];
 
   try {
