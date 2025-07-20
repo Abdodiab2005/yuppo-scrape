@@ -1,0 +1,5 @@
+.env
+node_modules/
+output/
+images
+products_data.xlsx
