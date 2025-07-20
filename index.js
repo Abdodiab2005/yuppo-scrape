@@ -17,73 +17,73 @@ const bagsURLs = [
   "https://newcopybrand.x.yupoo.com/categories/346661?isSubCate=true",
 ];
 
-const strapURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/197256?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/294388?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89157?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/203855?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89158?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149214?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/198172?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/218812?isSubCate=true",
-];
+// const strapURLs = [
+//   "https://newcopybrand.x.yupoo.com/categories/197256?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/294388?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89157?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/203855?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89158?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/149214?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/198172?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/218812?isSubCate=true",
+// ];
 
-const shoesURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/197236?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89106?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/232206?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/233317?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/378524?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89109?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149174?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/388589?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/340968?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/322686?isSubCate=true",
-];
+// const shoesURLs = [
+//   "https://newcopybrand.x.yupoo.com/categories/197236?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89106?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/232206?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/233317?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/378524?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89109?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/149174?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/388589?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/340968?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/322686?isSubCate=true",
+// ];
 
-const clothesURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/336373?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/196759?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89116?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/203853?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89117?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149209?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/388529?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/218766?isSubCate=true",
-];
+// const clothesURLs = [
+//   "https://newcopybrand.x.yupoo.com/categories/336373?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/196759?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89116?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/203853?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89117?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/149209?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/388529?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/218766?isSubCate=true",
+// ];
 
-const clovesURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/198884?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89170?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/203863?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149177?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/211373?isSubCate=true",
-];
+// const clovesURLs = [
+//   "https://newcopybrand.x.yupoo.com/categories/198884?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89170?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/203863?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/149177?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/211373?isSubCate=true",
+// ];
 
-const scarfURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/196761?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89153?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/203884?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149210?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/198268?isSubCate=true",
-];
+// const scarfURLs = [
+//   "https://newcopybrand.x.yupoo.com/categories/196761?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89153?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/203884?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/149210?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/198268?isSubCate=true",
+// ];
 
-const walletsURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/276454?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/461171?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/332326?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149169?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/197440?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/218797?isSubCate=true",
-];
+// const walletsURLs = [
+//   "https://newcopybrand.x.yupoo.com/categories/276454?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/461171?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/332326?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/149169?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/197440?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/218797?isSubCate=true",
+// ];
 
-const seaClothesurls = [
-  "https://newcopybrand.x.yupoo.com/categories/196763?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/89119?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/203888?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/205908?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/357018?isSubCate=true",
-];
+// const seaClothesurls = [
+//   "https://newcopybrand.x.yupoo.com/categories/196763?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/89119?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/203888?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/205908?isSubCate=true",
+//   "https://newcopybrand.x.yupoo.com/categories/357018?isSubCate=true",
+// ];
 
 // ===================================================================================
 // START: منطقة الإعدادات والتخصيص
@@ -97,13 +97,13 @@ const seaClothesurls = [
  */
 const CATEGORIES_CONFIG = [
   { name: "seaClothes", urls: seaClothesurls },
-  { name: "bags", urls: bagsURLs },
-  { name: "shoes", urls: shoesURLs },
-  { name: "wallets", urls: walletsURLs },
-  { name: "clothes", urls: clothesURLs },
-  { name: "cloves", urls: clovesURLs },
-  { name: "scarf", urls: scarfURLs },
-  { name: "strap", urls: strapURLs },
+  // { name: "bags", urls: bagsURLs },
+  // { name: "shoes", urls: shoesURLs },
+  // { name: "wallets", urls: walletsURLs },
+  // { name: "clothes", urls: clothesURLs },
+  // { name: "cloves", urls: clovesURLs },
+  // { name: "scarf", urls: scarfURLs },
+  // { name: "strap", urls: strapURLs },
 ];
 
 /**
@@ -540,9 +540,9 @@ async function testSingleProduct(productUrl) {
 // ===================================================================================
 
 // لتشغيل عملية السحب الكاملة
-// main();
+main();
 
 // // لإلغاء التعليق عن السطر التالي وتجربة رابط واحد فقط (مع وضع تعليق على main();)
-const testUrl =
-  "https://newcopybrand.x.yupoo.com/albums/202890516?uid=1&isSubCate=true&referrercate=196763"; // ضع رابط منتج هنا
-testSingleProduct(testUrl);
+// const testUrl =
+//   "https://newcopybrand.x.yupoo.com/albums/202890516?uid=1&isSubCate=true&referrercate=196763"; // ضع رابط منتج هنا
+// testSingleProduct(testUrl);
