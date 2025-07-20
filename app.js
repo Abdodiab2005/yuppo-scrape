@@ -216,24 +216,24 @@ class YupooScraper {
 
         const pageData = await this.page.evaluate(() => {
           const productLinks = Array.from(
-            document.querySelectorAll(".album__main > a"),
+            document.querySelectorAll(".album__main"),
             (a) => a.href
           );
           const paginationLinks = [];
           const paginationContainer = document.querySelector(
             ".none_select.pagination__buttons"
           );
-          if (paginationContainer) {
-            Array.from(paginationContainer.children).forEach((child) => {
-              if (
-                !child.classList.contains("pagination__active") &&
-                child.classList.contains("pagination__number") &&
-                child.href
-              ) {
-                paginationLinks.push(child.href);
-              }
-            });
-          }
+          //   if (paginationContainer) {
+          //     Array.from(paginationContainer.children).forEach((child) => {
+          //       if (
+          //         !child.classList.contains("pagination__active") &&
+          //         child.classList.contains("pagination__number") &&
+          //         child.href
+          //       ) {
+          //         paginationLinks.push(child.href);
+          //       }
+          //     });
+          //   }
           return { productLinks, paginationLinks };
         });
 
