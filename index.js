@@ -207,7 +207,7 @@ const getAllProductLinks = async (page, categoryUrl) => {
 
     const pageData = await page.evaluate(() => {
       const productLinks = Array.from(
-        document.querySelectorAll(".album__main > a"),
+        document.querySelectorAll(".album__main"),
         (a) => a.href
       );
 
@@ -217,19 +217,19 @@ const getAllProductLinks = async (page, categoryUrl) => {
         ".none_select.pagination__buttons"
       );
       if (paginationContainer) {
-        const childs = Array.from(paginationContainer.children);
-        childs.forEach((child) => {
-          // نتجاهل الصفحة النشطة حاليًا أو أي عناصر أخرى غير مرقمة
-          if (
-            child.classList.contains("pagination__active") ||
-            !child.classList.contains("pagination__number")
-          ) {
-            return;
-          }
-          if (child.href) {
-            paginationLinks.push(child.href);
-          }
-        });
+        // const childs = Array.from(paginationContainer.children);
+        // childs.forEach((child) => {
+        //   // نتجاهل الصفحة النشطة حاليًا أو أي عناصر أخرى غير مرقمة
+        //   if (
+        //     child.classList.contains("pagination__active") ||
+        //     !child.classList.contains("pagination__number")
+        //   ) {
+        //     return;
+        //   }
+        //   if (child.href) {
+        //     paginationLinks.push(child.href);
+        //   }
+        // });
       }
       // ===== END: استخدام الـ Selector والمنطق الصحيح الخاص بك =====
 
