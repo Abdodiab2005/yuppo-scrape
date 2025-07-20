@@ -242,38 +242,50 @@ const getAllProductLinks = async (page, categoryUrl) => {
 };
 
 /**
- * @description تقوم بتحميل صورة من رابط معين وحفظها في المسار المحدد.
- * @param {object} page - كائن صفحة Puppeteer.
+ * @description تقوم بتحميل صورة بفتحها في تاب جديدة ومحاكاة طلب المستخدم.
+ * @param {object} browser - كائن متصفح Puppeteer الرئيسي.
  * @param {string} url - رابط الصورة.
  * @param {string} savePath - المسار الكامل لحفظ الصورة.
+ * @param {string} referer - رابط الصفحة التي وجدت فيها الصورة (لإرساله كـ header).
  * @returns {Promise<void>}
  */
-const downloadImage = async (page, url, savePath) => {
+const downloadImage = async (browser, url, savePath, referer) => {
+  let imagePage = null;
   try {
-    const imageBuffer = await page.evaluate(async (imageUrl) => {
-      const response = await fetch(imageUrl);
-      const buffer = await response.arrayBuffer();
-      return Array.from(new Uint8Array(buffer));
-    }, url);
-    await fs.writeFile(savePath, Buffer.from(imageBuffer));
+    imagePage = await browser.newPage();
+    // ضبط الهيدرز لجعل الطلب يبدو طبيعياً
+    await imagePage.setExtraHTTPHeaders({ Referer: referer });
+
+    const response = await imagePage.goto(url, { waitUntil: "networkidle0" });
+
+    if (response && response.ok()) {
+      const imageBuffer = await response.buffer();
+      await fs.writeFile(savePath, imageBuffer);
+    } else {
+      throw new Error(
+        `Failed to download. Status: ${response ? response.status() : "N/A"}`
+      );
+    }
   } catch (error) {
     log(`⚠️ Could not download image ${url}. Error: ${error.message}`);
+  } finally {
+    if (imagePage) {
+      await imagePage.close(); // تأكد من إغلاق التاب دائمًا
+    }
   }
 };
-
 /**
  * @description تسحب بيانات منتج واحد من صفحته.
+ * @param {object} browser - كائن متصفح Puppeteer.
  * @param {object} page - كائن صفحة Puppeteer.
  * @param {string} productUrl - رابط صفحة المنتج.
  * @param {string} categoryDir - مسار مجلد الفئة لحفظ الصور.
- * @returns {Promise<object|null>} - كائن يحتوي على بيانات المنتج، أو null في حالة الفشل.
+ * @returns {Promise<object|null>}
  */
-const scrapeProductDetails = async (page, productUrl, categoryDir) => {
+const scrapeProductDetails = async (browser, page, productUrl, categoryDir) => {
   try {
     log(`Scraping product: ${productUrl}`);
     await page.goto(productUrl, { waitUntil: "networkidle2" });
-
-    // استخراج بيانات المنتج باستخدام الدوال الموجودة في المتصفح (page.evaluate)
     const data = await page.evaluate(() => {
       const titleElement = document.querySelector(
         ".showalbumheader__gallerydec h2"
@@ -287,57 +299,54 @@ const scrapeProductDetails = async (page, productUrl, categoryDir) => {
       const otherImageElements = document.querySelectorAll(
         ".showalbum__children .autocover.image__img.image__portrait"
       );
-
       const rawTitle = titleElement ? titleElement.innerHTML : "";
       const fullTitle = rawTitle
-        .replace('<i class="showalbumheader__separator"></i>', "|")
+        .replace(/<i class="showalbumheader__separator"><\/i>/g, "|")
         .replace(/<\/?[^>]+(>|$)/g, "")
         .trim();
       const [title, code] = fullTitle.includes("|")
         ? fullTitle.split("|")
         : [fullTitle, "N/A"];
-
       const priceText = priceElement ? priceElement.innerText : "";
-      let price = "N/A";
-      let otherDetails = "N/A";
+      let price = "N/A",
+        otherDetails = "N/A";
       if (priceText.includes("USD")) {
         const parts = priceText.split("USD");
-        price = parts[0].split(":").pop().trim();
+        price = (parts[0] || "").split(":").pop().trim();
         otherDetails = (parts[1] || "").replace(/\n/g, " ").trim();
       }
-
       const mainImageUrl = mainImageElement ? mainImageElement.src : null;
-      const otherImageUrls = Array.from(otherImageElements).map(
-        (img) => img.src
-      );
-
+      const otherImageUrls = Array.from(otherImageElements, (img) => img.src);
       return { title, code, price, otherDetails, mainImageUrl, otherImageUrls };
     });
 
-    // استخراج ID فريد للمنتج من الرابط
     const productId =
       productUrl.match(/albums\/(\d+)/)?.[1] || `product_${Date.now()}`;
     const productImagesDir = path.join(categoryDir, productId);
     await fs.mkdir(productImagesDir, { recursive: true });
 
-    // تحميل وحفظ الصور
     let localMainImagePath = null;
     if (data.mainImageUrl) {
-      localMainImagePath = path.join(
-        productImagesDir,
-        `main_${path.basename(new URL(data.mainImageUrl).pathname)}`
+      const imageName =
+        path.basename(new URL(data.mainImageUrl).pathname) || "main.jpg";
+      localMainImagePath = path.join(productImagesDir, `main_${imageName}`);
+      // استدعاء دالة التحميل الجديدة
+      await downloadImage(
+        browser,
+        data.mainImageUrl,
+        localMainImagePath,
+        productUrl
       );
-      await downloadImage(page, data.mainImageUrl, localMainImagePath);
     }
 
     const localOtherImagePaths = [];
     for (let i = 0; i < data.otherImageUrls.length; i++) {
       const imgUrl = data.otherImageUrls[i];
-      const localPath = path.join(
-        productImagesDir,
-        `other_${i}_${path.basename(new URL(imgUrl).pathname)}`
-      );
-      await downloadImage(page, imgUrl, localPath);
+      const imageName =
+        path.basename(new URL(imgUrl).pathname) || `other_${i}.jpg`;
+      const localPath = path.join(productImagesDir, `other_${i}_${imageName}`);
+      // استدعاء دالة التحميل الجديدة
+      await downloadImage(browser, imgUrl, localPath, productUrl);
       localOtherImagePaths.push(localPath);
     }
 
@@ -355,7 +364,7 @@ const scrapeProductDetails = async (page, productUrl, categoryDir) => {
     log(
       `❌ Error scraping product ${productUrl}. Skipping. Error: ${error.message}`
     );
-    return null; // تجاهل المنتج في حالة حدوث خطأ فادح
+    return null;
   }
 };
 
