@@ -113,7 +113,7 @@ const CATEGORIES_CONFIG = [
  * - slowMo: لإضافة تأخير بسيط (بالمللي ثانية) بين العمليات لتجنب الحظر.
  */
 const BROWSER_OPTIONS = {
-  headless: false, // غيرها إلى true عند الرفع على الـ VPS
+  headless: true, // غيرها إلى true عند الرفع على الـ VPS
   slowMo: 50,
   args: ["--no-sandbox", "--disable-setuid-sandbox"], // إعدادات مهمة للتشغيل على بيئة Linux (VPS)
 };
