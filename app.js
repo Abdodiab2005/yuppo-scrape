@@ -6,15 +6,15 @@ const path = require("path");
 const archiver = require("archiver");
 
 const bagsURLs = [
-  "https://newcopybrand.x.yupoo.com/categories/196776?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/196776?isSubCate=true",
   "https://newcopybrand.x.yupoo.com/categories/461170?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/495711?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/587430?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/363974?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/149167?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/505883?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/537317?isSubCate=true",
-  "https://newcopybrand.x.yupoo.com/categories/346661?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/495711?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/587430?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/363974?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/149167?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/505883?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/537317?isSubCate=true",
+  //   "https://newcopybrand.x.yupoo.com/categories/346661?isSubCate=true",
 ];
 
 // const strapURLs = [
