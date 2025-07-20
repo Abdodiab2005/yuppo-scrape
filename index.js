@@ -229,7 +229,7 @@ const getAllProductLinks = async (page, categoryUrl) => {
     const productLinksOnPage = await page.evaluate(() => {
       const links = [];
       document
-        .querySelectorAll(".album__main > a")
+        .querySelectorAll(".album__main")
         .forEach((a) => links.push(a.href));
       return links;
     });
