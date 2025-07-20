@@ -505,17 +505,25 @@ async function main() {
  * مفيدة جداً لعملية الـ Debugging والتأكد من أن الـ Selectors تعمل بشكل صحيح.
  * قم بإلغاء التعليق من السطر الأخير لتشغيلها بدلاً من الدالة الرئيسية.
  */
+
 async function testSingleProduct(productUrl) {
   log("🚀 Starting single product test...");
-  const browser = await puppeteer.launch({
-    headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  if (!productUrl) {
+    log("❌ Test URL is not provided. Please define 'testUrl'.");
+    return;
+  }
+  const browser = await puppeteer.launch(BROWSER_OPTIONS);
   const page = await browser.newPage();
   const outputDir = await setupOutputDirectory();
   const testCategoryDir = path.join(outputDir, "test_product_images");
 
-  const data = await scrapeProductDetails(page, productUrl, testCategoryDir);
+  // استدعاء الدالة بالترتيب الصحيح للمعاملات
+  const data = await scrapeProductDetails(
+    browser,
+    page,
+    productUrl,
+    testCategoryDir
+  );
 
   if (data) {
     console.log("\n✅ Test Result - Scraped Data:");
@@ -523,12 +531,8 @@ async function testSingleProduct(productUrl) {
   } else {
     console.log("\n❌ Test failed. Could not scrape data.");
   }
-
-  log("Closing browser in 10 seconds...");
-  setTimeout(async () => {
-    await browser.close();
-    log("Test finished.");
-  }, 10000); // انتظر 10 ثواني لمراجعة الصفحة قبل الإغلاق
+  await browser.close();
+  log("✅ Test finished.");
 }
 
 // ===================================================================================
